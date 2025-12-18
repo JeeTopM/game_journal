@@ -15,7 +15,7 @@
 - 🔎 Продвинутый поиск с фильтрами
 
 ## 🏗️ Архитектура
-```bash
+```
 Game Journal/
 ├── 🐍 Django Backend (REST API + Admin)
 ├── 🐘 PostgreSQL (с полнотекстовым поиском)
