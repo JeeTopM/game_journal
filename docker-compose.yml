@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: game_journal
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/game_journal
+      DEBUG: "True"
+
+  bot:
+    build: ./bot
+    command: python main.py
+    volumes:
+      - ./bot:/app
+    depends_on:
+      - backend
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN:-your_bot_token_here}
+      DJANGO_SETTINGS_MODULE: backend.game_journal.settings
+
+volumes:
+  postgres_data:
