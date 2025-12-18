@@ -41,4 +41,4 @@ htmlcov/
 dist/
 build/
 *.egg-info/
-*.keys.py
+keysecret.py
